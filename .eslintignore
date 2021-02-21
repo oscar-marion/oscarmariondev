@@ -1,0 +1,6 @@
+_articles/
+.husky/
+.next/
+assets/
+node_modules/
+public/

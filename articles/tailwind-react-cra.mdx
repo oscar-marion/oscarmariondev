@@ -1,0 +1,290 @@
+---
+title: Setup Tailwind with Create React App without rewiring
+publishedOn: "2021-03-19"
+author: Oscar Marion
+summary: In this guide, we’ll cover a simple installation of Tailwind on a new project using CRA. As a bonus, we’ll also show you how to simply add dark/light theme support with CSS variables.
+slug: tailwind-react-cra
+tags: react,tailwind,cra,craco
+---
+
+## What is Tailwind?
+
+Tailwind is a CSS framework growing in popularity for many reasons: it’s very complete, highly customisable, responsive and lightweight. Why not good old Bootstrap? The best way to answer that question is with 2 others:
+
+-   Do you need a default theme?
+
+-   Do you need built-in UI components?
+
+Tailwind is a utility-first framework, meaning that you’ll be writing a lot of classes for your HTML elements. It’s therefore much more versatile than Bootstrap. It’s also much more lightweight: 1.4kB (minified), instead of the 60.9kB (minified) Bootstrap comes with.
+
+Looking for another reason to try it out? You can use it with Create React App (CRA), Next.js, Vue, Nuxt, Svelte and many others!
+
+## The official way
+
+Tailwind provides a very comprehensive step by step guide on how to wire it up with CRA. As it enforces a zero customisation policy, you could eject the app and tailor webpack to your needs. An easier approach you might be familiar with is CRACO. In fact, [Tailwind suggests using CRACO](https://tailwindcss.com/docs/guides/create-react-app).
+
+## The problem
+
+CRACO is a great tool used by thousands of developers to override the default CRA configuration. However, it does so by adding an extra dependency to your project — although it might be necessary in some cases, it is overkill here.
+
+### TL;DR
+
+We will use the `pre` npm script prefix as well as PostCSS to compile the css before running react scripts.
+
+---
+
+## Let’s do it!
+
+In this guide, we’ll cover a simple installation of Tailwind on a new project using CRA. You can of course repeat the installation steps on an existing project.
+
+As a bonus, we’ll also show you how to simply add dark/light theme support with CSS variables.
+
+A GitHub repository with the final code [can also be found here](https://github.com/oscar-marion/tailwind-cra-tutorial).
+
+### 1- Install CRA
+
+This command will create a starter project with Typescript support. You can of course remove the template flag and use regular Javascript.
+
+```bash
+npx create-react-app my-react-app --template typescript
+```
+
+### 2- Go to your app folder and install Tailwind, PostCSS and Autoprefixer like so:
+
+```bash
+npm i -D tailwindcss autoprefixer postcss-cli
+```
+
+### 3- Create a postcss.config.js file at the root of your project:
+
+```js
+// postcss.config.js
+
+const tailwindcss = require("tailwindcss");
+module.exports = {
+    plugins: [tailwindcss("./tailwind.config.js"), require("autoprefixer")]
+};
+```
+
+### 4- Create a Tailwind configuration file by running:
+
+```bash
+npx tailwind init
+```
+
+You should get a tailwind.config.js file that looks like this:
+
+```js
+// tailwind.config.js
+
+module.exports = {
+    purge: [],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {}
+    },
+    variants: {
+        extend: {}
+    },
+    plugins: []
+};
+```
+
+### 5- Create a tailwind.css file in your project, for instance under src/styles/tailwind.css:
+
+```css
+/** tailwind.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### 6- Add a css script to package.json, as well as a prestart and a prebuild :
+
+```json
+// package.json
+
+{
+    "scripts": {
+        "css": "postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css",
+        "prestart": "npm run css",
+        "prebuild": "npm run css"
+    }
+}
+```
+
+### 7- Import Tailwind css file to index.tsx. This way, we’re making Tailwind classes available to all our app’s components.
+
+```js
+// index.tsx
+
+/*...*/
+import "./styles/tailwind.generated.css";
+/*...*/
+```
+
+Don’t forget to add this line to .gitignore, as this file gets generated each time we run the start or build command:
+
+```markup
+tailwind.generated.css
+```
+
+We didn’t use Tailwind classes yet, but now is a good time to run npm run startand check that everything works.
+
+## Make some changes
+
+To check that the Tailwind classes get picked up, open ./src/App.ts and edit the Learn React link className property:
+
+```js
+// ./src/App.ts
+
+<a className="App-link bg-white rounded mt-2 px-2" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+    Learn React
+</a>
+```
+
+You should see the changes in your browser pretty instantly and your Learn React link should now look like this:
+
+## Cleanup the production build
+
+Say we want to deploy this app right now. When running **npm run build** , CRA is kind enough to provide some information on our bundle size. As you can see, this app is quite hefty:
+
+The bundled css weighs far too much, and there’s a reason for it: it includes all the Tailwind css classes from the @base, @components and @utilities that we set earlier. We want this on our development environment, but certainly not in production — only the used classes should be included in the build.
+
+To clean up the unused classes, we’ll need to change the purge configuration of tailwind.config.js file to:
+
+```js
+// tailwind.config.js
+
+module.exports = {
+    purge: {
+        mode: "all",
+        content: ["./src/**/*.ts", "./src/**/*.tsx"]
+    }
+    // ...
+};
+```
+
+_If you didn’t go for the Typescript template, make sure to change your file extensions accordingly._
+
+Now, let’s make sure Tailwind knows we run the build in a production environment by installing cross-env:
+
+```bash
+npm i -D cross-env
+```
+
+And change our prebuild script to:
+
+```json
+"prebuild": "cross-env NODE_ENV=production npm run css"
+```
+
+As you run the build script, the bundled css weight should decrease a lot. To test that, **npm run build** once again:
+
+Finally, let’s make sure our Tailwind classes are still applied: serve the built project by running **npx serve -s build**. Learn React should still look like on the dev environment.
+
+---
+
+## Bonus: setup a light / dark mode switcher
+
+### 1- Use CSS variables
+
+Let’s extract the colors that are currently set in the src/App.css classes and set them as css variables:
+
+```css
+/* ./src/App.css */
+
+:root {
+    --color-primary: #282c34;
+    --color-secondary: #ffffff;
+    --color-accent: #61dafb;
+}
+```
+
+You can now assign them to Tailwind variables. Your entire configuration should look like this:
+
+```js
+// tailwind.config.js
+
+module.exports = {
+    purge: {
+        mode: "all",
+        content: ["./src/**/*.ts", "./src/**/*.tsx"]
+    },
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {
+            colors: {
+                primary: "var(--color-primary)",
+                secondary: "var(--color-secondary)",
+                accent: "var(--color-accent)"
+            }
+        }
+    },
+    variants: {
+        extend: {}
+    },
+    plugins: []
+};
+```
+
+As you changed the Tailwind configuration, you’ll have to stop the dev server and launch npm run startagain.
+
+In App.css, you can remove the background-color and color properties set for the .App-header class, as well as the entire .App-link class.
+
+Going back to App.tsx, make some changes to get the same look as before:
+
+-   Add bg-primary text-secondaryto the header className attribute
+
+-   For the Learn React link, replace App-link class by text-accent and bg-white by bg-secondary.
+
+### 2- Enable dark mode
+
+Create the light CSS variables under a data attribute set on the root div in App.tsx. To do that, add this to App.css, below the CSS variables you set before:
+
+```css
+/* ./src/App.css */
+
+[data-theme="light"] {
+    --color-primary: #ffffff;
+    --color-secondary: #282c34;
+    --color-accent: #61dafb;
+}
+```
+
+We can now switch between these themes. To keep things simple for this tutorial, we will handle the theme in the component’s local state with the useState hook. In the real world, you would obviously save user preference in a cookie or in localStorage. You could also base the initial theme on prefers-color-scheme.
+
+Let’s set our localState:
+
+```js
+const [theme, setTheme] = useState(“dark”)
+```
+
+Add the current theme to the App.tsx root div:
+
+```js
+<div className=“App” data-theme={theme}>
+```
+
+Next, let’s create our handler:
+
+```js
+// ./src/App.tsx
+
+import React, { MouseEvent, useState } from 'react';
+// ...
+function App() {
+  const [theme, setTheme] = useState(“dark”)
+
+  const handleSwitchTheme = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
+  // ...
+}
+```
+
+Time to add a switch theme button. We will use the **Learn more** link and change it to our needs:
+
+Try hitting the Switch theme button. If this fancy light theme shows up, congratulations, you got everything working!
