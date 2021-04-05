@@ -33,6 +33,9 @@ const components = {
     pre: CodeBlock,
     hr: Divider,
     ul: List,
+    blockquote: ({ children }: any) => (
+        <div className="border-l-2 my-2 border-secondaryLight pt-2 pl-4 text-secondaryLight ">{children}</div>
+    ),
     ol: ({ children }: any) => <List isOrdered>{children}</List>
 };
 
@@ -52,6 +55,11 @@ const Article: FC<{ source: MdxRemote.Source; frontMatter: PostFrontMatter }> = 
                     <ArticleHeader title={title} date={publishedOn} tags={tagsArray} />
                     {content}
                 </article>
+                <div className="mt-8 text-center">
+                    <Link href="/articles" className="link-effect">
+                        <Text>← Articles</Text>
+                    </Link>
+                </div>
             </Default>
         </>
     );
