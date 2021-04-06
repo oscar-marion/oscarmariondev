@@ -17,7 +17,7 @@ Tailwind is a CSS framework growing in popularity for many reasons: it’s very 
 
 Tailwind is a utility-first framework, meaning that you’ll be writing a lot of classes for your HTML elements. It’s therefore much more versatile than Bootstrap. It’s also much more lightweight: 1.4kB (minified), instead of the 60.9kB (minified) Bootstrap comes with.
 
-Looking for another reason to try it out? You can use it with Create React App (CRA), Next.js, Vue, Nuxt, Svelte and many others!
+> Looking for another reason to try it out? You can use it with Create React App (CRA), Next.js, Vue, Nuxt, Svelte and many others!
 
 ## The official way
 
@@ -41,7 +41,7 @@ As a bonus, we’ll also show you how to simply add dark/light theme support wit
 
 A GitHub repository with the final code [can also be found here](https://github.com/oscar-marion/tailwind-cra-tutorial).
 
-### 1- Install CRA
+### 1. Install CRA
 
 This command will create a starter project with Typescript support. You can of course remove the template flag and use regular Javascript.
 
@@ -49,13 +49,13 @@ This command will create a starter project with Typescript support. You can of c
 npx create-react-app my-react-app --template typescript
 ```
 
-### 2- Go to your app folder and install Tailwind, PostCSS and Autoprefixer like so:
+### 2. Go to your app folder and install Tailwind, PostCSS and Autoprefixer like so:
 
 ```bash
 npm i -D tailwindcss autoprefixer postcss-cli
 ```
 
-### 3- Create a postcss.config.js file at the root of your project:
+### 3. Create a postcss.config.js file at the root of your project:
 
 ```js
 // postcss.config.js
@@ -66,7 +66,7 @@ module.exports = {
 };
 ```
 
-### 4- Create a Tailwind configuration file by running:
+### 4. Create a Tailwind configuration file by running:
 
 ```bash
 npx tailwind init
@@ -90,7 +90,7 @@ module.exports = {
 };
 ```
 
-### 5- Create a tailwind.css file in your project, for instance under src/styles/tailwind.css:
+### 5. Create a tailwind.css file in your project, for instance under src/styles/tailwind.css:
 
 ```css
 /** tailwind.css */
@@ -100,7 +100,7 @@ module.exports = {
 @tailwind utilities;
 ```
 
-### 6- Add a css script to package.json, as well as a prestart and a prebuild :
+### 6. Add a css script to package.json, as well as a prestart and a prebuild:
 
 ```json
 // package.json
@@ -114,7 +114,7 @@ module.exports = {
 }
 ```
 
-### 7- Import Tailwind css file to index.tsx. This way, we’re making Tailwind classes available to all our app’s components.
+### 7. Import Tailwind css file to index.tsx. This way, we’re making Tailwind classes available to all our app’s components.
 
 ```js
 // index.tsx
@@ -166,7 +166,7 @@ module.exports = {
 };
 ```
 
-_If you didn’t go for the Typescript template, make sure to change your file extensions accordingly._
+> If you didn’t go for the Typescript template, make sure to change your file extensions accordingly.
 
 Now, let’s make sure Tailwind knows we run the build in a production environment by installing cross-env:
 
@@ -188,7 +188,7 @@ Finally, let’s make sure our Tailwind classes are still applied: serve the bui
 
 ## Bonus: setup a light / dark mode switcher
 
-### 1- Use CSS variables
+### 1. Use CSS variables
 
 Let’s extract the colors that are currently set in the src/App.css classes and set them as css variables:
 
@@ -239,7 +239,7 @@ Going back to App.tsx, make some changes to get the same look as before:
 
 -   For the Learn React link, replace App-link class by text-accent and bg-white by bg-secondary.
 
-### 2- Enable dark mode
+### 2. Enable dark mode
 
 Create the light CSS variables under a data attribute set on the root div in App.tsx. To do that, add this to App.css, below the CSS variables you set before:
 
