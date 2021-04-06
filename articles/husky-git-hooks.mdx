@@ -1,0 +1,131 @@
+---
+title: Ban bad code from your CI with Husky pre-commit hooks
+publishedOn: "2021-04-06"
+author: Oscar Marion
+summary: Keep a clean git history, your colleagues happy and your build minutes consumption low with this step by step tutorial.
+slug: husky-git-hooks
+tags: git,husky,ci/cd,hooks
+---
+
+Ideally, any development project should have a Continuous Integration (CI) system that ensures the code will not break anything in the application and follows certain coding conventions.
+
+This is what CI pipelines are for. An array of scripts needs to succeed before a pull request can be merged. One example of such a pipeline could be:
+
+1. Install node modules
+
+2. Run unit tests
+
+3. Run static code analysis
+
+4. Run build script
+
+Now, imagine you’re finally done developing a feature and you create your pull request, not noticing you left out a _console.debug()_ in the wild.
+
+Say you did a good job and _step 2_ succeeds. However, your ESLint configuration [disallows the use of console](https://eslint.org/docs/rules/no-console) and _step 3_ fails. A big red icon shows up next to your pull request — crap, let’s hope nobody noticed!
+
+Our pipeline did its job, but what if we could have caught this earlier? It would have saved us the hassle of fixing the code locally and update the PR. What about the build-minutes we just wasted for such a silly mistake? And more importantly, what about our PR reviewer(s) who already started to go through your code only to see the CI pipeline fail?
+
+One way to avoid this situation is to perform all the pipeline checks locally, before creating the PR. But you can’t reasonably expect developers to do that before each commit. Automating this would be great right?
+
+---
+
+## Git hooks are the answer
+
+A git hook is nothing more than a script triggered when a specific event occurs in your repository. Hooks can run on the developer’s machine (_client-side_) as well as on the server hosting the repository (_server-side_). We will only scratch the surface of their potential here: if you want to learn more, here’s an excellent [tutorial by Atlassian](https://www.atlassian.com/git/tutorials/git-hooks).
+
+**Writing git hooks comes with a few challenges**, mainly to ensure they are installed on your teammates' machines.
+
+## Enters husky
+
+[Husky](https://github.com/typicode/husky) is a tiny tool that makes it easy to set up git hooks and share them across your team. We will use it together with [lint staged](https://github.com/okonet/lint-staged).
+
+### 1. Install husky
+
+```bash
+npm install -D husky
+# or
+yarn add -D husky
+```
+
+### 2. Enable git hooks
+
+```bash
+npx husky install
+```
+
+### 3. Automate git hook installation for your teammates
+
+For npm, add this prepare script to your package.json:
+
+```json
+{
+    "prepare": "npx husky install"
+}
+```
+
+Yarn requires a slightly different configuration:
+
+```json
+{
+    "private": true,
+    "scripts": {
+        "postinstall": "npx husky install"
+    }
+}
+```
+
+> Using Yarn2 in a non-private repo? Check [this link](https://typicode.github.io/husky/#/?id=yarn-2).
+
+### 4. Install lint-staged
+
+```bash
+npm install -D lint-staged
+# or
+yarn add -D lint-staged
+```
+
+Add the lint-staged configuration to your package.json and customise it to your needs. We assume that you already have linters and tests scripts set up.
+
+```json
+    "lint-staged": {
+        "*.{ts,tsx}": [
+            "npm run format", // prettier --write script
+            "npm run lint:fix" // eslint --fix script
+			"npm run test" // jest
+        ]
+    },
+```
+
+### 5. Create your hook
+
+This command will create a .husky folder at the root of your project:
+
+```bash
+npx husky add .husky/pre-commit "npx lint-staged"
+```
+
+## What did we just do?
+
+Let’s summarise what we set up so far:
+
+1.  Lint stage will be triggered each time we commit, thanks to husky.
+
+2.  It will only run our scripts on staged files, here specifically .ts and .tsx files.
+
+3.  Your linter and formatter will try to fix all the errors they find.
+
+4.  If these errors can be fixed automatically, lint-staged will add them to the current commit. If not, the commit will fail and output the error.
+
+The **prepare** (npm) or **postinstall** (yarn) scripts we added before will ensure that these hooks are installed on your teammates' machines.
+
+> You will need at least Git 2.9, as husky uses the _core.hooksPath_ configuration to point git hooks to the .husky folder.
+
+---
+
+## Final thoughts
+
+Using git hooks allows you to catch your mistakes earlier and faster than when relying exclusively on CI pipelines. This helps you keep a **clean git history**, your colleagues happy and your build minutes consumption low.
+
+> Note that a simple _—no-verify_ flag at the end of your commit command will skip the hook; **client-side hook are not sufficient** on their own and should be used together with CI pipelines.
+
+Thanks for reading! 😃
