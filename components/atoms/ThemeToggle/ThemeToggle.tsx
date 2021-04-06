@@ -17,7 +17,7 @@ export const ThemeToggle: FC<{ className?: string }> = ({ className = "" }) => {
         <div className={`items-center pl-2 w-10 ${className}`} onClick={handleThemeToggle} aria-hidden="true">
             {Runtime.isBrowser() && (
                 <DarkModeSwitch
-                    checked={!isDarkMode}
+                    checked={isDarkMode}
                     onChange={handleThemeToggle}
                     size={28}
                     moonColor="var(--color-orange)"
