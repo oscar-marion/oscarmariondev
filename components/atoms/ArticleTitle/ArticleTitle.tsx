@@ -7,7 +7,7 @@ export const ArticleTitle: FC<{ slug?: string; title: string }> = ({ slug, title
         <>
             {slug ? (
                 <Link href={`/${ARTICLES_FOLDER}/${slug}`}>
-                    <Heading level={HeadingLevel.H2} className="link-effect" size={HeadingSize.Medium}>
+                    <Heading level={HeadingLevel.H2} className="link-effect" size={HeadingSize.Default}>
                         {title}
                     </Heading>
                 </Link>
