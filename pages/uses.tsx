@@ -1,11 +1,11 @@
-import { Text, Default, Heading, HeadingSize, Link } from "components";
+import { Text, Default, Heading, HeadingSize, Link, HeadingLevel } from "components";
 import Head from "next/head";
 
 export default function Uses() {
     return (
         <>
             <Head>
-                <title>Use - Oscar Marion</title>
+                <title>Uses - Oscar Marion</title>
                 <meta
                     name="description"
                     content="An up-to-date list of things I use in my daily life. Inspired by Wes Bos uses.tech."
@@ -13,20 +13,21 @@ export default function Uses() {
             </Head>
 
             <Default>
-                <Heading size={HeadingSize.Large}>
+                <Heading size={HeadingSize.Large} level={HeadingLevel.H1}>
                     Uses<span className="text-accent">.</span>
                 </Heading>
                 <Text isParagraph>
                     An up-to-date list of things I use in my daily life. Inspired by Wes Bos'{" "}
                     <Link href="https://uses.tech/" isExternal>
-                        uses.tech
+                        uses.tech.
                     </Link>
-                    .
                 </Text>
 
                 <Heading size={HeadingSize.Medium} className="text-accent">
-                    Editor / Terminal
+                    Software
                 </Heading>
+
+                <Heading level={HeadingLevel.H3}>Editor / Terminal</Heading>
                 <ul className="list-disc pl-5 mb-4">
                     <li>
                         <Text isParagraph>
@@ -79,9 +80,7 @@ export default function Uses() {
                         </Text>
                     </li>
                 </ul>
-                <Heading size={HeadingSize.Medium} className="text-accent">
-                    CLI
-                </Heading>
+                <Heading level={HeadingLevel.H3}>CLI</Heading>
                 <ul className="list-disc pl-5 mb-4">
                     <li>
                         <Text isParagraph>
@@ -125,9 +124,7 @@ export default function Uses() {
                         </Text>
                     </li>
                 </ul>
-                <Heading size={HeadingSize.Medium} className="text-accent">
-                    Desktop apps
-                </Heading>
+                <Heading level={HeadingLevel.H3}>Desktop apps</Heading>
                 <ul className="list-disc pl-5 mb-4">
                     <li>
                         <Text isParagraph>
@@ -208,22 +205,39 @@ export default function Uses() {
                     </li>
                 </ul>
                 <Heading size={HeadingSize.Medium} className="text-accent">
-                    Computer setup
+                    Desk setup
                 </Heading>
+                <ul className="list-disc pl-5 mb-4">
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.hermanmiller.com/products/seating/office-chairs/aeron-chairs/"
+                                isExternal
+                            >
+                                Herman Miller Aeron
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.ikea.com/gb/en/p/idasen-desk-sit-stand-black-dark-grey-s89280993/"
+                                isExternal
+                            >
+                                IDÅSEN
+                            </Link>{" "}
+                            sit/stand desk
+                        </Text>
+                    </li>
+                </ul>
+                <Heading level={HeadingLevel.H3}>Computers / Devices</Heading>
                 <ul className="list-disc pl-5 mb-4">
                     <li>
                         <Text isParagraph>2019 15" Macbook Pro 2.3GHz 8-Core i9 with 32GB of RAM.</Text>
                     </li>
                     <li>
                         <Text isParagraph>
-                            <Link href="https://www.caldigit.com/fr/ts3-plus-fr/" isExternal>
-                                CalDigit TS3 Plus
-                            </Link>
-                        </Text>
-                    </li>
-                    <li>
-                        <Text isParagraph>
-                            Custom-built PC rocking an Intel 10700K, an RTX 3080 and 64GB of RAM inside the{" "}
+                            Custom-built PC - Intel 10700K, RTX 3080 and 64GB of RAM inside the{" "}
                             <Link href="https://www.phanteks.com/Enthoo-Pro2-TemperedGlass.html" isExternal>
                                 Enthoo Pro 2
                             </Link>{" "}
@@ -232,23 +246,41 @@ export default function Uses() {
                     </li>
                     <li>
                         <Text isParagraph>
+                            <Link href="https://www.apple.com/ipad-pro/" isExternal>
+                                iPad Pro 2018 12,9"
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link href="https://www.apple.com/shop/buy-iphone/iphone-xr" isExternal>
+                                iPhone XR
+                            </Link>
+                        </Text>
+                    </li>
+                </ul>
+                <Heading level={HeadingLevel.H3}>Computer accessories</Heading>
+                <ul className="list-disc pl-5 mb-4">
+                    <li>
+                        <Text isParagraph>
                             4K 34" 120Hz{" "}
                             <Link
                                 href="https://rog.asus.com/monitors/32-to-34-inches/rog-swift-pg349q-model/"
                                 isExternal
                             >
                                 Asus ROG PG349Q
-                            </Link>{" "}
-                            with an Amazon Basics{" "}
-                            <Link
-                                href="https://www.amazon.com/AmazonBasics-Premium-Dual-Monitor-Stand/dp/B00MIBN71I"
-                                isExternal
-                            >
-                                monitor stand
                             </Link>
                             .
                         </Text>
                     </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link href="https://www.caldigit.com/fr/ts3-plus-fr/" isExternal>
+                                CalDigit TS3 Plus
+                            </Link>
+                        </Text>
+                    </li>
+
                     <li>
                         <Text isParagraph>
                             <Link href="https://drop.com/buy/drop-ctrl-mechanical-keyboard" isExternal>
@@ -263,13 +295,62 @@ export default function Uses() {
                                 isExternal
                             >
                                 MX Master 3
-                            </Link>{" "}
-                            and{" "}
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
                             <Link
                                 href="https://www.logitechg.com/en-us/products/gaming-mice/pro-wireless-mouse.910-005270.html"
                                 isExternal
                             >
                                 G PRO Wireless
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            Amazon Basics{" "}
+                            <Link
+                                href="https://www.amazon.com/AmazonBasics-Premium-Dual-Monitor-Stand/dp/B00MIBN71I"
+                                isExternal
+                            >
+                                monitor stand
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link href="https://www.twelvesouth.com/products/bookarc-macbook" isExternal>
+                                Twelve South BookArc
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link href="https://www.therooststand.com/" isExternal>
+                                Roost laptop stand
+                            </Link>
+                        </Text>
+                    </li>
+                </ul>
+                <Heading level={HeadingLevel.H3}>Audio</Heading>
+                <ul className="list-disc pl-5 mb-4">
+                    <li>
+                        <Text isParagraph>
+                            Massdrop X Sennheiser{" "}
+                            <Link href="https://drop.com/buy/massdrop-sennheiser-hd6xx" isExternal>
+                                HD 6XX
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.bose.co.uk/en_gb/products/headphones/over_ear_headphones/quietcomfort-35-wireless-ii.html"
+                                isExternal
+                            >
+                                Bose QC35 II
                             </Link>
                         </Text>
                     </li>
@@ -285,6 +366,51 @@ export default function Uses() {
                         <Text isParagraph>
                             <Link href="https://www.bluemic.com/en-us/products/yeti/" isExternal>
                                 Blue Yeti
+                            </Link>
+                        </Text>
+                    </li>
+                </ul>
+                <Heading level={HeadingLevel.H3}>Backpacks</Heading>
+                <ul className="list-disc pl-5 mb-4">
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.goruck.com/collections/best-sellers/products/gr1?variant=32978334711908"
+                                isExternal
+                            >
+                                GORUCK GR1
+                            </Link>{" "}
+                            (21L)
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.peakdesign.com/products/everyday-backpack?variant=29743300771884"
+                                isExternal
+                            >
+                                Peak Design Everyday Backpack
+                            </Link>{" "}
+                            (30L)
+                        </Text>
+                    </li>
+                </ul>
+                <Heading level={HeadingLevel.H3}>Pouches</Heading>
+                <ul className="list-disc pl-5 mb-4">
+                    <li>
+                        <Text isParagraph>
+                            <Link href="https://bellroy.com/products/tech-kit/looma_viroblock/basalt" isExternal>
+                                Bellroy Tech Kit
+                            </Link>
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            <Link
+                                href="https://www.peakdesign.com/collections/pouches-cubes/products/tech-pouch"
+                                isExternal
+                            >
+                                Peak Design Tech Pouch
                             </Link>
                         </Text>
                     </li>

@@ -1,4 +1,4 @@
-import { Text, Default, Heading, HeadingSize, Link } from "components";
+import { Text, Default, Heading, HeadingSize, Link, HeadingLevel } from "components";
 import Head from "next/head";
 
 export default function About() {
@@ -10,7 +10,7 @@ export default function About() {
             </Head>
 
             <Default>
-                <Heading size={HeadingSize.Large}>
+                <Heading size={HeadingSize.Large} level={HeadingLevel.H1}>
                     The homepage was rather short, right? <span className="text-accent">Let's make up for that</span>.
                 </Heading>
                 <Text isParagraph>
@@ -30,7 +30,8 @@ export default function About() {
                     High traffic retail websites are truly amazing to work on!
                 </Text>
                 <Text isParagraph>
-                    Since April 2020, I’m a senior Saleforce / Front-End consultant at Capgemini Belgium.
+                    Since April 2020, I’m a senior Saleforce / Front-End consultant at{" "}
+                    <strong>Capgemini Belgium</strong>.
                 </Text>
                 <Heading size={HeadingSize.Medium} className="text-accent">
                     About this website
@@ -43,8 +44,21 @@ export default function About() {
                     , Typescript and Tailwind CSS. Hosting is provided by{" "}
                     <Link href="https://www.vercel.com" isExternal>
                         Vercel
+                    </Link>{" "}
+                    and code is{" "}
+                    <Link href="https://github.com/oscar-marion/oscarmariondev" isExternal>
+                        hosted
+                    </Link>{" "}
+                    on Github.
+                </Text>
+                <Heading size={HeadingSize.Medium} className="text-accent">
+                    Get in touch
+                </Heading>
+                <Text isParagraph>
+                    Feel free to contact me via{" "}
+                    <Link href="https://www.linkedin.com/in/oscarmarion" isExternal>
+                        Linkedin.
                     </Link>
-                    .
                 </Text>
             </Default>
         </>

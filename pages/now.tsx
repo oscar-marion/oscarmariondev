@@ -1,4 +1,4 @@
-import { Text, Default, Heading, HeadingSize, Link } from "components";
+import { Text, Default, Heading, HeadingSize, Link, HeadingLevel } from "components";
 import Head from "next/head";
 
 export default function Now() {
@@ -10,11 +10,11 @@ export default function Now() {
             </Head>
 
             <Default>
-                <Heading size={HeadingSize.Large}>
+                <Heading size={HeadingSize.Large} level={HeadingLevel.H1}>
                     What I'm doing <span className="text-accent">now</span>.
                 </Heading>
                 <Text isParagraph className="italic">
-                    (Last update on 01/03/2020)
+                    (Last update on 08/04/2020)
                 </Text>
                 <ul className="list-disc pl-5 mb-4">
                     <li>
@@ -66,7 +66,22 @@ export default function Now() {
                         </Text>
                     </li>
                     <li>
-                        <Text isParagraph>Working on my Python skills with some side projects.</Text>
+                        <Text isParagraph>
+                            Using{" "}
+                            <Link href="https://github.com/ingydotnet/git-subrepo" isExternal>
+                                git-subrepo
+                            </Link>{" "}
+                            to share code between projects.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            Working on my Python skills with some{" "}
+                            <Link href="https://flask.palletsprojects.com/en/1.1.x/" isExternal>
+                                Flask
+                            </Link>{" "}
+                            side projects.
+                        </Text>
                     </li>
                     <li>
                         <Text isParagraph>
@@ -74,9 +89,14 @@ export default function Now() {
                             <Link href="https://github.com/vitejs/vite" isExternal>
                                 Vite
                             </Link>{" "}
-                            for my React apps, instead of the "slow"{" "}
-                            <Link href="https://github.com/facebook/create-react-app" isExternal>
-                                Create React App
+                            for my React apps.
+                        </Text>
+                    </li>
+                    <li>
+                        <Text isParagraph>
+                            Creating VSCode extensions with{" "}
+                            <Link href="https://github.com/sveltejs/kit" isExternal>
+                                SvelteKit
                             </Link>
                             .
                         </Text>
@@ -88,11 +108,11 @@ export default function Now() {
                     </li>
                     <li>
                         <Text isParagraph>
-                            Using Svelte from time to time, while waiting for the first{" "}
-                            <Link href="https://svelte.dev/blog/whats-the-deal-with-sveltekit" isExternal>
-                                SvelteKit
-                            </Link>{" "}
-                            stable release.
+                            Learning about{" "}
+                            <Link href="https://react-query.tanstack.com/" isExternal>
+                                React Query
+                            </Link>
+                            .
                         </Text>
                     </li>
                 </ul>

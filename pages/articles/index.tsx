@@ -1,4 +1,4 @@
-import { Text, Default, ArticleHeader } from "components";
+import { Text, Default, ArticleHeader, Heading, HeadingSize, HeadingLevel } from "components";
 import Head from "next/head";
 import { ArticlesLib } from "lib/Article.lib";
 
@@ -10,6 +10,9 @@ export default function Articles({ posts }: any) {
             </Head>
 
             <Default>
+                <Heading size={HeadingSize.Large} level={HeadingLevel.H1}>
+                    Articles and <span className="text-accent">thoughts</span>.
+                </Heading>
                 {posts.map(({ title, summary, publishedOn, tags, slug }: any) => {
                     const tagsArray = tags.split(",");
                     return (
