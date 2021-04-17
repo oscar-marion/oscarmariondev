@@ -21,16 +21,12 @@
 body {
     background-color: var(--color-primary);
     color: var(--color-secondary);
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
 }
 
-html {
-    height: -webkit-fill-available;
-}
-
+html,
+body,
 #__next {
-    min-height: 100vh;
+    height: 100%;
 }
 
 ::marker {
